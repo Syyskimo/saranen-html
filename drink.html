@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- käytettävä kirjaisintyyppi, käytännössä kannattaa lähtökohtaisesti aina käyttää utf-8 -->
+	<meta charset='utf-8'>
+    <!-- auttaa siihen, settä puhelimella "leveys" on laskennallisesti pieni, eikä yritetä skaalata
+     2000 pikselin levyistä näkymää puhelimelle, vaikka siinä niin paljon realistisia pikseleitä
+     olisikin -->
+	<meta name='viewport' content='width=device-width,initial-scale=1'>
+    <!-- Sivun otsake, näkyy mm. selaimen välihden otsikkona -->
+	<title>Drinking like a pro</title>
+    <!-- sivuston logon esittely, näkyy mm. selaimen välilehden kuvakkeena -->
+	<link rel='icon' type='image/png' href='./img/logo-drink.png'>
+    <!-- ladataan fontawesomen ikonikirjasto käyttöön, kts: https://fontawesome.com/ -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- omat tyylit -->
+	<link rel='stylesheet' href='./css/drink.css'>
+
+</head>
+<body>
+    <header>
+        <div class="row">
+            <div class="logo">
+                <img src="img/logo-drink.png" />
+            </div>
+            <div class="promile">0.22</div>
+        </div>
+    </header>
+    <div class="profile row">
+        <form>
+            <div class="section">
+                <div class="radio icons">
+                    <label><input required type="radio" name="gender" value="maiden" /> <i class="fa-solid fa-venus"></i> Neito</label>
+                    <label><input type="radio" name="gender" value="goblin" /> <i class="fa-solid fa-mars"></i> Menninkäinen</label>
+                </div>
+                <div class="input">
+                    <label for="weight">Paino</label>
+                    <input type="number" required placeholder="Anna painosi kilogrammoissa" min="40" max="400" step="0.5" id="weight" name="weight" />
+                </div>
+            </div>
+            <div class="section">
+                <div class="input buttons">
+                    <button>Tallenna</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        <form>
+            <div class="section">
+                <div class="radio icons">
+                    <h2>Vahvuus (%)</h2>
+                    <label>
+                        <input required type="radio" name="alcvol" value="40.0" /> <i class="fa-solid fa-whiskey-glass"></i> 40% (tiukka)
+                    </label>
+                    <label>
+                        <input type="radio" name="alcvol" value="12.0" /> <i class="fa-solid fa-wine-glass"></i>12% (viini)
+                    </label>
+                    <label>
+                        <input type="radio" name="alcvol" value="8.2" /> <i class="fa-solid fa-wine-bottle"></i> 8.2% (Westons)
+                    </label>
+                    <label>
+                        <input type="radio" name="alcvol" value="4.7" /> <i class="fa-solid fa-beer-mug-empty"></i> 4.7% (keskiolut)
+                    </label>
+                </div>
+
+                <div class="radio icons">
+                    <h2>Koko</h2>
+                    <label>
+                        <input required type="radio" name="volume" value="0.04" /> <i class="fa-solid fa-whiskey-glass"></i> 4cl (shotti)
+                    </label>
+                    <label>
+                        <input type="radio" name="volume" value="0.12" /> <i class="fa-solid fa-wine-glass"></i> 12cl (viinilasi)
+                    </label>
+                    <label>
+                        <input type="radio" name="volume" value="0.33" />  <i class="fa-solid fa-bottle-droplet"></i> 0,33l (pieni)
+                    </label>
+                    <label>
+                        <input type="radio" name="volume" value="0.4" /> <i class="fa-solid fa-wine-glass-empty"></i> 0,4l (tuoppi)
+                    </label>
+                    <label>
+                        <input type="radio" name="volume" value="0.5" /> <i class="fa-solid fa-beer-mug-empty"></i> 0,5l (iso)
+                    </label>
+                </div>
+
+            </div>
+
+            <div class="section">
+                <div class="input buttons">
+                    <button>Ota juoma</button>
+                </div>
+            </div>
+        </form>
+
+
+    </div>
+    <div class="row">
+        <ul class="drinks">
+            <li>
+                <div class="size"><i class="fa-solid fa-beer-mug-empty"></i> <span class="info">(0,5l)</span> </div>
+                <div class="alc">8,2% <span class="info">(Westons)</span></div>
+                <div class="time">1h</div>
+                <div class="action">
+                    <button>Poista</button>
+                </div>
+            </li>
+            <li>
+                <div class="size"><i class="fa-solid fa-wine-glass-empty"></i> <span class="info">(0,4l)</span> </div>
+                <div class="alc">4,7% <span class="info">(keskiolut)</span></div>
+                <div class="time">2h</div>
+                <div class="action">
+                    <button>Poista</button>
+                </div>
+            </li>
+            <li>
+                <div class="size"><i class="fa-solid fa-wine-glass-empty"></i> <span class="info">(0,4l)</span> </div>
+                <div class="alc">4,7% <span class="info">(keskiolut)</span></div>
+                <div class="time">2h</div>
+                <div class="action">
+                    <button>Poista</button>
+                </div>
+            </li>                        
+        </ul>
+    </div>
+
+</body>
+</html>

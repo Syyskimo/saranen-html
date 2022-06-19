@@ -1,0 +1,302 @@
+:root {
+    /* BASE COLORS */
+
+    /* css-muuttujien asetus, jotta näitä voi käyttää muualla */
+    /* kts: https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties */
+
+    --primary-color: #fc3ac2;
+    --primary-color-contrast: #000;
+
+    --secondary-color: #af1682;
+    --secondary-color-contrast: #fff;
+
+    --tertiary-color: #c9fc53;
+    --tertiary-color-contrast: #000;
+
+    --quaternary-color: #20bafc;
+    --quaternary-color-contrast: #000;
+
+    --quaternary-color-darken: #01628c;
+
+    /* CUSTOM COLORS */
+}
+
+
+/* latin */
+/* paikallisesti ladattu google -fontti */
+/* voi myös käyttää suoraan googlen palvelusta, kts google: "google font" */
+@font-face {
+    font-family: 'Fascinate';
+    font-style: normal;
+    font-weight: 400;
+    src: url(../fonts/Fascinate-Regular.ttf) format('ttf');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+*, *::after, *::before {
+    /*
+    *-valinta (eli tähti) tarkoittaa, että koskee kaikkea
+    */
+
+    /* box-sizing: border-box määrittää sen, miten elementin koko lasketaan.
+       Border-box laskee elementin kokoon kaikki aina reunoja myöten (eli käytännössä
+       kaikki paitsi margin on elementin kokoa), kts:border:
+       https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing
+        */
+    box-sizing: border-box;
+}
+
+html {
+    background-color: #333;
+}
+
+/* Erilaiset koot css:ssä, kts: https://www.w3schools.com/cssref/css_units.asp */
+
+body {
+    /* nollataan body-margin, jonka selain oletuksena saattaa laittaa */
+    margin: 0;
+    /* asetetaan oletus-fontti käyttöön */
+    font-family: 'Fascinate', cursive;
+}
+
+button, input {
+    /* asetetaan oletus-fontti käyttöön */
+    font-family: 'Fascinate', cursive;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+h1 {
+    background-color: var(--quaternary-color);
+    color: var(--quaternary-color-contrast);
+}
+
+.row {
+    width: 100%;
+    overflow: hidden;
+    max-width: 768px;
+    display: block;
+    margin: auto;
+    background-color: var(--secondary-color);
+    color: var(--secondary-color-contrast);
+    margin-bottom: 12px;
+    padding: 12px;
+}
+
+header {
+    width: 100%;
+    overflow: hidden;
+    background-color: var(--primary-color);
+    color: var(--primary-color-contrast);
+    position: fixed;
+    top: 0;
+    z-index: 100;
+}
+
+.promile {
+    font-size: 56px;
+}
+
+.promile::after {
+    content: '‰';
+}
+
+header .row {
+    color: inherit;
+    background-color: inherit;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    height: 100px;
+    margin-bottom: 0;
+}
+
+img {
+    max-height: 100%;
+    width: auto;
+}
+
+header .row .promile {
+    flex-grow: 1;
+    text-align: right;
+}
+
+.profile {
+    /* laitetaan ensimmäiselle elementille marginia ylös, jotta
+    fixed-top ei jää alle */
+    margin-top: 112px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.radio, .input {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+}
+
+.input label {
+    margin-left: 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.section {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 12px;
+}
+
+/* "media query" css:ssä antaa mahdollisuuden tehdä selaimeen leveydestä riippuvia tyylimäärittelyjä
+   Tässä alla vaihdetaan .section -osioiden juoksutus riveiltä sarakkeiksi, eli käytännössä laitetaan
+   allekkain, sen sijaan, että laitettaisiin viererkkäin, silloin kun selaimen leveys on alle 600px
+    kts: https://www.w3schools.com/cssref/css3_pr_mediaquery.asp */
+@media only screen and (max-width: 600px) {
+    .section {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+button {
+    font-size: 18px;
+    width: 140px;
+    height: auto;
+    border-width: 1px;
+    color: var(--quaternary-color-contrast);
+    border-color: var(--quaternary-color);
+    font-weight: bold;
+    border-top-right-radius: 18px;
+    border-bottom-left-radius: 18px;
+    background: var(--quaternary-color);
+    cursor: pointer;
+    margin: 5px 0;
+}
+
+.buttons {
+    align-items: end;
+}
+
+button:hover {
+    background: var(--quaternary-color-darken);
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+
+.radio label {
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 1.1;
+    display: grid;
+    grid-template-columns: 1em auto;
+    gap: 0.5em;
+    margin-bottom: 0.5rem;
+}
+/* gridin koon kasvattaminen yhdellä suuremmaksi, jos radio-buttoneissa on mukana ikonit (fontawesome i-tagi) */
+.radio.icons label {
+    grid-template-columns: 1em 1em auto;
+}
+.radio label:focus-within {
+    color: var(--quaternary-color);
+}
+
+/* tämä oli netistä kopioitu (yksi) tapa tyylitellä radio-napit
+   ideana on, että ::before -määritteellä piirretään valintapallo itse */
+input[type="radio"] {
+    /* Add if not using autoprefixer */
+    -webkit-appearance: none;
+    /* Remove most all native input styles */
+    appearance: none;
+    /* For iOS < 15 */
+    background-color: var(--quaternary-color-darken);
+    /* Not removed via appearance */
+    margin: 0;
+
+    font: inherit;
+    color: currentColor;
+    width: 1.15em;
+    height: 1.15em;
+    border: 0.15em solid currentColor;
+    border-radius: 50%;
+    transform: translateY(-0.075em);
+
+    display: grid;
+    place-content: center;
+}
+
+input[type="radio"]::before {
+    content: "";
+    width: 0.65em;
+    height: 0.65em;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em var(--quaternary-color);
+    /* Windows High Contrast Mode */
+    background-color: CanvasText;
+}
+
+input[type="radio"]:checked::before {
+    transform: scale(1);
+}
+
+input[type="radio"]:focus {
+    outline: max(2px, 0.15em) solid currentColor;
+    outline-offset: max(2px, 0.15em);
+}
+
+ul {
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-inline-start: 0;
+}
+ul li {
+	flex-grow: 1;
+	display: grid;
+    grid-template-columns: 20% 30% 15% auto;
+    gap: 0.5em;
+    margin-bottom: 0.5rem;
+    font-size: 1.7rem;
+}
+
+ul li .action {
+    text-align: right;
+}
+
+ul.drinks li:hover {
+    background-color: rgba(0,0,0,0.1);
+}
+
+
+@media only screen and (max-width: 600px) {
+    /* Kasvatetaan fonttikokoa, kun päätelaite pienempi (puhelin tms).
+       Tässä käytössä todella laiskan leiskaan tekniikka eli !important
+       tätä ei sinänsä kannattaisi juurikaan käyttää, mutta se mitä se
+       tekee on pakottaa ko. tyylin, vaikka jokin toinen tyyli olisikin
+       tarkempi. (tosin jos monella eri säännöllä on important järjestys
+       ja "tarkkuus" määrittävät, kuten yleensä */
+    button, input, label {
+        font-size: 1.8rem !important;
+    }
+    h2 {
+        font-size: 2.0rem;
+    }
+    /* sovitetaan listan gridi paremmin mobiilinäkymään */
+    ul.drinks li {
+        grid-template-columns: 15% 20% 15% auto;
+        gap: 0.25em;
+
+    }
+    /* piilotetaan teksti-osiot mobiilinäkymästä */
+    ul.drinks li .info {
+        display: none;
+    }
+}
