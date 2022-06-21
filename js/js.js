@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
             event.preventDefault();
 
             let data = new FormData(element);
-            addDrink(data.get("alcvol"), data.get("volume"));
+            addDrink(data.get("alcvol"), data.get("volume"), Math.floor(Math.random() * 7200), 'id-' + Math.random(1, 1234567));
 
         });
     });
@@ -35,12 +35,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
 const UUID_KEY = "personUUID";
 
-function addDrink(alcvol, volume) {
+function addDrink(alcvol, volume, seconds, id) {
     let template = document.querySelector('#drinkrow');
     let li = template.content.cloneNode(true).querySelector('li');
 
     li.querySelector(".size").innerHTML = volume;
     li.querySelector(".alc").innerHTML = alcvol + "%";
+    li.querySelector(".time").innerHTML = seconds + "s";
     
     document.querySelector('ul.drinks').appendChild(li);
 
