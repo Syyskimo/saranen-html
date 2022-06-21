@@ -1,12 +1,25 @@
 document.addEventListener("DOMContentLoaded", function() {
-    console.log("dokumentti ladattu!");
 
     document.querySelectorAll("form.drink-form").forEach((element) => {
         element.addEventListener("submit", function(event) {
             event.preventDefault();
 
-            let data = new FormData(element);
-            addDrink(data.get("alcvol"), data.get("volume"), Math.floor(Math.random() * 7200), 'id-' + Math.random(1, 1234567));
+            let formData = new FormData(element);
+
+            const baseData = {
+                alcvol: formData.get("alcvol"), 
+                volume: formData.get("volume")
+            };
+
+            fetch(API + "/person/" + getPersonUUID() + "/drink?" + new URLSearchParams(baseData))
+            .then(response => response.json())
+            .then(data => {
+                addDrink(formData.get("alcvol"), formData.get("volume"), Math.floor(Math.random() * 7200), 'id-' + Math.random(1, 1234567));
+                updateData(data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });      
 
         });
     });
@@ -19,17 +32,32 @@ document.addEventListener("DOMContentLoaded", function() {
 
     });
 
-    document.querySelectorAll(".action button").forEach((element) => {
-        element.addEventListener("click", function(event) {
-            event.preventDefault();
-            const parent = element.closest('li');
-            parent.classList.add('fadeout');
-            setTimeout(function() {
-                parent.remove();
-            }, 2000);
-        });
+
+     document.querySelector("ul.drinks").addEventListener("click", function(event) {
+        if (!event.target.classList.contains("remove")) {
+            return;
+        }
+        
+        event.preventDefault();
+        const parent = event.target.closest('li');
+        parent.classList.add('fadeout');
+
+        fetch(API + "/person/" + getPersonUUID() + "/undrink/" +  event.target.dataset.uuid)
+        .then(response => response.json())
+        .then(data => {
+            updateData(data, false);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });  
+
+        setTimeout(function() {
+            parent.remove();
+        }, 2000);
     });
 
+    
+    refreshPerson();
 
 });
 
@@ -49,6 +77,7 @@ function addDrink(alcvol, volume, seconds, id) {
     li.querySelector(".size").innerHTML = `<i class="fa-solid ${getSizeIconClass(volume)}"></i> <span class="info">(${(volume + "").replace(".", ",")}l)</span>`;
     li.querySelector(".alc").innerHTML = `${(alcvol + "").replace(".", ",")}%<span class="info">(${getAlcVolDescription(alcvol)})</span>`;
     li.querySelector(".time").innerHTML = (hours > 0 ? hours + "h " : "") + minutes + "m";
+    li.querySelector("button.remove").dataset.uuid = id;
     
     document.querySelector('ul.drinks').appendChild(li);
 
@@ -86,21 +115,60 @@ function setPerson(female, weight) {
     if (uuid) {
         // on olemassa, päivitetään henkilö
         console.log("Hienoa! Olet olemassa, minäpä päivitän sinut!");
+
+        fetch(API + "/person/" + uuid + "/update?" + new URLSearchParams(baseData))
+        .then(response => response.json())
+        .then(data => {
+            updateData(data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
     } else {
         // ei ole olemassa, eli pitää luoda uusi henkilö
         console.log("Henkilöä ei ole olemassa, tee sellainen");
-        console.log(baseData);
 
         fetch(API + "/person/create?" + new URLSearchParams(baseData))
         .then(response => response.json())
         .then(data => {
-            console.log('Success:', data);
+            setPersonUUID(data.uuid);
+            updateData(data);
         })
         .catch((error) => {
             console.error('Error:', error);
         });
     }
 
+}
+
+function updateData(data, reloadDrinks = true) {
+    console.log(data);
+    promilleAction(data.promile);
+
+    if (reloadDrinks) {
+        document.querySelector("ul.drinks").innerHTML = "";
+
+        for (const drink of data.drinks) {
+            addDrink(drink.alcVol, drink.volume, drink.secondsSince, drink.id);
+        }
+
+    }
+
+}
+
+function refreshPerson() {
+    let uuid = getPersonUUID();
+    if (uuid) {
+        fetch(API + "/person/" + uuid)
+        .then(response => response.json())
+        .then(data => {
+            updateData(data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });        
+
+    }
 }
 
 function getSizeIconClass(volume) {
