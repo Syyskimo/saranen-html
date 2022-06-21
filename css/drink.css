@@ -265,6 +265,12 @@ ul li {
     gap: 0.5em;
     margin-bottom: 0.5rem;
     font-size: 1.7rem;
+    transition-duration: 2s;
+    transition-property: transform;
+}
+
+ul li.fadeout {
+    transform: scaleY(0) rotateY(720deg);
 }
 
 ul li .action {

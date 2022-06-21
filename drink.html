@@ -11,6 +11,10 @@
 	<title>Drinking like a pro</title>
     <!-- sivuston logon esittely, näkyy mm. selaimen välilehden kuvakkeena -->
 	<link rel='icon' type='image/png' href='./img/logo-drink.png'>
+
+    <script src="./js/js.js"></script>
+
+
     <!-- ladataan fontawesomen ikonikirjasto käyttöön, kts: https://fontawesome.com/ -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- omat tyylit -->
@@ -21,13 +25,13 @@
     <header>
         <div class="row">
             <div class="logo">
-                <img src="img/logo-drink.png" />
+                <img id="logo" src="img/logo-drink.png" />
             </div>
-            <div class="promile">0.22</div>
+            <div id="promile" class="promile">0.22</div>
         </div>
     </header>
     <div class="profile row">
-        <form>
+        <form class="ajax">
             <div class="section">
                 <div class="radio icons">
                     <label><input required type="radio" name="gender" value="maiden" /> <i class="fa-solid fa-venus"></i> Neito</label>
@@ -47,7 +51,7 @@
         </form>
     </div>
     <div class="row">
-        <form>
+        <form class="drink-form">
             <div class="section">
                 <div class="radio icons">
                     <h2>Vahvuus (%)</h2>
@@ -123,6 +127,15 @@
             </li>                        
         </ul>
     </div>
-
+    <template id="drinkrow">
+        <li>
+            <div class="size"></div>
+            <div class="alc"></div>
+            <div class="time"></div>
+            <div class="action">
+                <button>Poista</button>
+            </div>
+        </li>
+      </template>
 </body>
 </html>
