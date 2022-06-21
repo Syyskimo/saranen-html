@@ -10,6 +10,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
         });
     });
+    const personForm = document.getElementById("personform");
+    personForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+        let data = new FormData(personForm);
+
+        setPerson(data.get("gender"), data.get("weight"));
+
+    });
 
     document.querySelectorAll(".action button").forEach((element) => {
         element.addEventListener("click", function(event) {
@@ -24,6 +32,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 });
+
+const UUID_KEY = "personUUID";
 
 function addDrink(alcvol, volume) {
     let template = document.querySelector('#drinkrow');
@@ -46,3 +56,26 @@ function promilleAction(p) {
     pro.innerHTML = (Math.round(p * 100) / 100);
 }
 
+
+function setPersonUUID(uuid) {
+    localStorage.setItem(UUID_KEY, uuid);
+}
+
+function getPersonUUID() {
+    return localStorage.getItem(UUID_KEY);
+}
+
+function setPerson(female, weight) {
+    let uuid = getPersonUUID();
+
+    console.log("sukupuoli: " + female + " paino: " + weight);
+
+    if (uuid) {
+        // on olemassa, päivitetään henkilö
+        console.log("Hienoa! Olet olemassa, minäpä päivitän sinut!");
+    } else {
+        // ei ole olemassa, eli pitää luoda uusi henkilö
+        console.log("Henkilöä ei ole olemassa, tee sellainen");
+    }
+
+}
