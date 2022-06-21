@@ -35,6 +35,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
 const UUID_KEY = "personUUID";
 
+const API = "https://drink.syyskimo.com";
+//const API = "http://localhost:8080";
+
 function addDrink(alcvol, volume, seconds, id) {
     let template = document.querySelector('#drinkrow');
     let li = template.content.cloneNode(true).querySelector('li');
@@ -75,12 +78,27 @@ function setPerson(female, weight) {
 
     console.log("sukupuoli: " + female + " paino: " + weight);
 
+    const baseData = { 
+        female: (female == "maiden"),
+        weight: weight
+    };
+
     if (uuid) {
         // on olemassa, päivitetään henkilö
         console.log("Hienoa! Olet olemassa, minäpä päivitän sinut!");
     } else {
         // ei ole olemassa, eli pitää luoda uusi henkilö
         console.log("Henkilöä ei ole olemassa, tee sellainen");
+        console.log(baseData);
+
+        fetch(API + "/person/create?" + new URLSearchParams(baseData))
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
     }
 
 }
