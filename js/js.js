@@ -39,9 +39,13 @@ function addDrink(alcvol, volume, seconds, id) {
     let template = document.querySelector('#drinkrow');
     let li = template.content.cloneNode(true).querySelector('li');
 
-    li.querySelector(".size").innerHTML = volume;
-    li.querySelector(".alc").innerHTML = alcvol + "%";
-    li.querySelector(".time").innerHTML = seconds + "s";
+    let minutes = Math.floor(seconds / 60);
+    let hours = Math.floor(minutes / 60);
+    minutes = minutes % 60;
+
+    li.querySelector(".size").innerHTML = `<i class="fa-solid ${getSizeIconClass(volume)}"></i> <span class="info">(${(volume + "").replace(".", ",")}l)</span>`;
+    li.querySelector(".alc").innerHTML = `${(alcvol + "").replace(".", ",")}%<span class="info">(${getAlcVolDescription(alcvol)})</span>`;
+    li.querySelector(".time").innerHTML = (hours > 0 ? hours + "h " : "") + minutes + "m";
     
     document.querySelector('ul.drinks').appendChild(li);
 
@@ -79,4 +83,28 @@ function setPerson(female, weight) {
         console.log("Henkilöä ei ole olemassa, tee sellainen");
     }
 
+}
+
+function getSizeIconClass(volume) {
+    if (volume < 0.1) {
+        return 'fa-whiskey-glass';
+    } else if (volume < 0.25) {
+        return 'fa-wine-glass';
+    } else if (volume < 0.36) {
+        return 'fa-wine-glass-empty';
+    } else {
+        return 'fa-beer-mug-empty';
+    }
+}
+
+function getAlcVolDescription(alcvol) {
+    if (alcvol < 6) {
+        return 'Keskiolut';
+    } else if (alcvol < 10) {
+        return 'Westons';
+    } else if (alcvol < 25) {
+        return 'Viini';
+    } else {
+        return 'Tiukka';
+    }
 }
